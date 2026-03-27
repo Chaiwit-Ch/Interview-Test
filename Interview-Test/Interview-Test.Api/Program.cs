@@ -29,6 +29,8 @@ builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
 
+builder.Services.AddTransient<AuthenMiddleware>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -38,6 +40,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseMiddleware<AuthenMiddleware>();
+app.UseMiddleware<AuthenMiddleware>();
 app.UseMvc();
 app.Run();
