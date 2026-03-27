@@ -10,10 +10,14 @@ public class RoleModel
     [Required]
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int RoleId { get; set; }
+
     [Required]
     [Column(TypeName = "varchar(100)")]
     public string RoleName { get; set; }
-    [DeleteBehavior(DeleteBehavior.Cascade)]
+
+    [NotMapped]
     public ICollection<PermissionModel> Permissions { get; set; }
-    public ICollection<UserRoleMappingModel> UserRoleMappings { get; set; }
+
+    public ICollection<UserRoleMappingModel> UserRoleMappings { get; set; } = new List<UserRoleMappingModel>();
+    public ICollection<RolePermissionMappingModel> RolePermissionMappings { get; set; } = new List<RolePermissionMappingModel>();
 }

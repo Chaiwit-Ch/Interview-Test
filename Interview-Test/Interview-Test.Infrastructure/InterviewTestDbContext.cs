@@ -15,6 +15,7 @@ public class InterviewTestDbContext : DbContext
     public DbSet<RoleModel> RoleTb { get; set; }
     public DbSet<UserRoleMappingModel> UserRoleMappingTb { get; set; }
     public DbSet<PermissionModel> PermissionTb { get; set; }
+    public DbSet<RolePermissionMappingModel> RolePermissionMappingTb { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -34,7 +35,7 @@ public class InterviewTestDbContextDesignFactory : IDesignTimeDbContextFactory<I
 {
     public InterviewTestDbContext CreateDbContext(string[] args)
     {
-        string connectionString = "<your database connection string>";
+        string connectionString = "Server=localhost,1433;Database=InterviewTestDb;User Id=sa;Password=@Passw0rd;TrustServerCertificate=True;Encrypt=False;";
         var optionsBuilder = new DbContextOptionsBuilder<InterviewTestDbContext>()
             .UseSqlServer(connectionString, opts => opts.CommandTimeout(600));
 

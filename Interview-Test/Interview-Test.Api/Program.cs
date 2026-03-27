@@ -1,5 +1,7 @@
 using Interview_Test.Infrastructure;
 using Interview_Test.Middlewares;
+using Interview_Test.Repositories.Interfaces;
+using Interview_Test.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
-var connection = "<your database connection string>";
+var connection = "Server=localhost,1433;Database=InterviewTestDb;User Id=sa;Password=@Passw0rd;TrustServerCertificate=True;Encrypt=False;";
 builder.Services.AddDbContext<InterviewTestDbContext>(options =>
     {
         options.UseSqlServer(connection,
@@ -22,6 +24,10 @@ builder.Services.AddDbContext<InterviewTestDbContext>(options =>
             });
     }
 );
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
 
 var app = builder.Build();
 
@@ -32,6 +38,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseMiddleware<AuthenMiddleware>();
+//app.UseMiddleware<AuthenMiddleware>();
 app.UseMvc();
 app.Run();

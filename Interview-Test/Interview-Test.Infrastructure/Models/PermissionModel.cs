@@ -8,9 +8,11 @@ public class PermissionModel
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public long PermissionId { get; set; }
+
     [Required]
-    [Column(TypeName = "text")]
+    [Column(TypeName = "varchar(100)")]
     public string Permission { get; set; }
-    [ForeignKey("RoleId")]
-    public RoleModel Role { get; set; }
+
+    public ICollection<RolePermissionMappingModel> RolePermissionMappings { get; set; } = new List<RolePermissionMappingModel>();
+
 }

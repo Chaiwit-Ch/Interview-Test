@@ -9,15 +9,17 @@ public class UserModel
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
+
     [Required]
     [Column(TypeName = "varchar(20)")]
     public string UserId { get; set; }
+
     [Required]
     [Column(TypeName = "varchar(100)")]
     public string Username { get; set; }
+
     [Required]
-    [DeleteBehavior(DeleteBehavior.Cascade)]
     public UserProfileModel UserProfile { get; set; }
-    [Required]
-    public ICollection<UserRoleMappingModel> UserRoleMappings { get; set; }
+
+    public ICollection<UserRoleMappingModel> UserRoleMappings { get; set; } = new List<UserRoleMappingModel>();
 }
