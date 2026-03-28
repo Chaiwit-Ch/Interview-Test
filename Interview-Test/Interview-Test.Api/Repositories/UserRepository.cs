@@ -13,6 +13,38 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
+    public dynamic GetUsers()
+    {
+        var users = _context.UserTb
+            .Select(u => new
+            {
+                id = u.Id,
+                userId = u.UserId,
+                username = u.Username,
+                firstName = u.UserProfile.FirstName,
+                lastName = u.UserProfile.LastName,
+                age = u.UserProfile.Age,
+
+                roles = u.UserRoleMappings
+                    .Select(urm => new
+                    {
+                        roleId = urm.Role.RoleId,
+                        roleName = urm.Role.RoleName
+                    })
+                    .Distinct()
+                    .ToList(),
+
+                permissions = u.UserRoleMappings
+                    .SelectMany(urm => urm.Role.RolePermissionMappings)
+                    .Select(rp => rp.Permission.Permission)
+                    .Distinct()
+                    .ToList()
+            })
+            .ToList();
+
+        return users;
+    }
+
     public dynamic GetUserById(string id)
     {
         var user = _context.UserTb

@@ -4,6 +4,7 @@ namespace Interview_Test.Repositories.Interfaces;
 
 public interface IUserRepository
 {
+    dynamic GetUsers();
     dynamic GetUserById(string id);
     int CreateUser(UserModel? user);
 }
