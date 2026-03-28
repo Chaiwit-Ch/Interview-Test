@@ -1,1 +1,67 @@
-﻿<p>todo</p>
+﻿<section>
+  <h1 style="font-size: 56px; margin: 30px 0 24px;">Users</h1>
+
+  <input
+    type="text"placeholder="Search by id, userId, username, name"
+    style="width: 680px; max-width: 100%; padding: 10px 12px; font-size: 18px; margin-bottom: 14px;"
+  />
+
+  <div *ngIf="isLoading" style="margin-top: 12px;">Loading...</div>
+  <div *ngIf="errorMessage" style="margin-top: 12px; color: red;">{{ errorMessage }}</div>
+
+  <table *ngIf="!isLoading && !errorMessage" style="width: 100%; border-collapse: collapse;">
+    <thead>
+        <tr>
+        <th>UserId</th>
+        <th>Username</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>#Roles</th>
+        <th>#Permissions</th>
+        <th>Detail</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let user of filteredUsers">
+        <td>{{ user.userId }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.firstName }} {{ user.lastName }}</td>
+        <td>{{ user.age ?? '-'}}</td>
+        <td>{{ user.roles.length }}</td>
+        <td>{{ user.permissions.length }}</td>
+        <td><a [routerLink]="['/users', user.id]">View</a></td>
+      </tr>
+
+      <tr *ngIf="filteredUsers.length === 0">
+        <td colspan="7" style="border: 1px solid #ccc; padding: 8px 16px; text-align: center;">
+          No users found.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    border: 1px solid #ccc;
+    padding: 8px 16px;
+    text-align: left;
+  }
+
+  thead {
+    background: #e0e0e0;
+  }
+
+  tbody tr:hover {
+    background: #f5f5f5;
+  }
+
+  tbody tr:nth-child(even) {
+    background: #fafafa;
+  }
+</style>

@@ -28,7 +28,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("GetUserById/{id}")]
-    public ActionResult GetUserById(string? id)
+    public ActionResult GetUserById(string id)
     {
         var result = _userRepository.GetUserById(id);
 

@@ -48,7 +48,7 @@ public class UserRepository : IUserRepository
     public dynamic GetUserById(string id)
     {
         var user = _context.UserTb
-            .Where(u => u.UserId == id)
+            .Where(u => u.Id.ToString() == id)
             .Select(u => new
             {
                 id = u.Id,
